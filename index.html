@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Click</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100vh;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* 상단 숫자 */
+        #counter {
+            position: absolute;
+            top: 40px;
+            font-size: 42px;
+            font-weight: bold;
+            color: #222222;
+            user-select: none;
+        }
+
+        /* 캐릭터 */
+        #character {
+            width: 250px;
+            height: auto;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-drag: none;
+            transition: transform 0.1s ease;
+        }
+
+        #character:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="counter">0</div>
+
+    <img
+        id="character"
+        src="character.png"
+        alt="Character"
+        draggable="false"
+    >
+
+    <script>
+        const character = document.getElementById("character");
+        const counter = document.getElementById("counter");
+
+        let count = 0;
+        let timeout = null;
+
+        // 두 번째 이미지 미리 로딩
+        const secondImage = new Image();
+        secondImage.src = "character2.png";
+
+        character.addEventListener("click", () => {
+
+            // 숫자 1 증가
+            count++;
+            counter.textContent = count;
+
+            // 캐릭터 이미지 변경
+            character.src = "character2.png";
+
+            // 기존 타이머 초기화
+            clearTimeout(timeout);
+
+            // 0.4초 후 원래 이미지로 복귀
+            timeout = setTimeout(() => {
+                character.src = "character.png";
+            }, 400);
+
+        });
+    </script>
+
+</body>
+</html>
